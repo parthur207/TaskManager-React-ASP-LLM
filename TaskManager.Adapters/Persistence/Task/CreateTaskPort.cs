@@ -7,7 +7,7 @@ using TaskManager.Core.Ports.Task;
 
 namespace TaskManager.Adapters.Persistence.Task
 {
-    internal class CreateTaskPort : ICreateTaskPort
+    public class CreateTaskPort : ICreateTaskPort
     {
     }
 }

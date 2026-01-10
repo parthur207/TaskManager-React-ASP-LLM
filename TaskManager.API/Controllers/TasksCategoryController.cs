@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaskManager.API.Facades;
 
 namespace TaskManager.API.Controllers
 {
@@ -10,8 +11,14 @@ namespace TaskManager.API.Controllers
     [Route("api/tasksCategory")]
     public class TasksCategoryController : Controller
     {
-   
-        private readonly 
+
+        private readonly TaskUseCaseFacade _taskUseCaseFacade;
+        public TasksCategoryController(TaskUseCaseFacade taskUseCaseFacade)
+        {
+            _taskUseCaseFacade = taskUseCaseFacade;
+        }
+
+ 
 
     }
 }

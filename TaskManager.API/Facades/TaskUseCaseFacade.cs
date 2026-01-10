@@ -5,18 +5,8 @@ namespace TaskManager.API.Facades
 {
     public class TaskUseCaseFacade
     {
-        public ICreateTaskUseCase Create { get; }
-        public IUpdateTaskDetailsUseCase Update { get; }
-        public IDeleteTaskUseCase Delete { get; }
-        public IGetTaskByIdUseCase GetById { get; }
-        public ISearchTaskUseCase Search { get; }
 
-        public TaskUseCaseFacade(
-            ICreateTaskUseCase create,
-            IUpdateTaskDetailsUseCase update,
-            IDeleteTaskUseCase delete,
-            IGetTaskByIdUseCase getById,
-            ISearchTaskUseCase search)
+        public TaskUseCaseFacade(ICreateTaskUseCase create, IUpdateTaskDetailsUseCase update, IDeleteTaskUseCase delete, IGetTaskByIdUseCase getById, ISearchTaskUseCase search)
         {
             Create = create;
             Update = update;
@@ -24,5 +14,13 @@ namespace TaskManager.API.Facades
             GetById = getById;
             Search = search;
         }
+
+        public ICreateTaskUseCase Create { get; }
+        public IUpdateTaskDetailsUseCase Update { get; }
+        public IDeleteTaskUseCase Delete { get; }
+        public IGetTaskByIdUseCase GetById { get; }
+        public ISearchTaskUseCase Search { get; }
+
+    
     }
 }
