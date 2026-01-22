@@ -11,7 +11,7 @@ namespace TaskManager.Adapters.Persistence.Task
 {
     public class CreateTaskPort : ICreateTaskPort
     {
-        public async Task<SimpleResponseModel> Execute(TaskEntity Entity)
+        public async Task<SimpleResponseModel> ExecutAsync(TaskEntity Entity)
         {
             SimpleResponseModel Response = new SimpleResponseModel();
             try
