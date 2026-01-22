@@ -4,10 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.Ports.Task;
+using TaskManager.Core.ResposePattern;
 
 namespace TaskManager.Adapters.Persistence.Task
 {
     public class DeleteTaskPort : IDeleteTaskPort
     {
+        public Task<SimpleResponseModel> ExecuteAsync(Guid IdTask, Guid IdUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

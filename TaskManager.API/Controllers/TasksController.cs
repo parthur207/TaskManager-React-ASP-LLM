@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TaskManager.API.Models;
 
 namespace TaskManager.API.Controllers
 {
+    [ApiController]
+    [Authorize]
+    [Route("api/task")]
     public class TasksController : Controller
     {
         private readonly ILogger<TasksController> _logger;
@@ -13,7 +17,7 @@ namespace TaskManager.API.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> CreateTask([FromBody] tASK)
         {
             return View();
         }

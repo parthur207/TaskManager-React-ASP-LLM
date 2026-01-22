@@ -7,9 +7,9 @@ using TaskManager.Core.Enums;
 
 namespace TaskManager.Core.Models
 {
-    public class SearchModel
+    public class SearchTaskModel
     {
-        public SearchModel(string? category, TaskStatusEnum? statusEnum, DateTime? from, DateTime? to)
+        public SearchTaskModel(string? category, TaskStatusEnum? statusEnum, DateTime? from, DateTime? to)
         {
             Category = category;
             StatusEnum = statusEnum;
