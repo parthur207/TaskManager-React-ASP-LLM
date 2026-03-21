@@ -22,19 +22,43 @@ namespace TaskManager.Core.UseCases.User
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<ResponseModel<string>> ExecuteAsync(CreateUserModel model)
+        public async Task<ResponseModel<string>> ExecuteAsync(LoginRequestModel model)
         {
             var Response = new ResponseModel<string>();
-
-            if (model is null)
+            try
             {
-                Response.Status= ResponseStatusEnum.Error;
-                Response.Message = "O modelo é nulo.";
-                return Response;
+                if (model is null)
+                {
+                    Response.Status = ResponseStatusEnum.Error;
+                    Response.Message = "O modelo é nulo.";
+                    return Response;
+                }
+
+                _passwordHasher.Hash(model.Password);
+
+                var user = await _loginUserPort.(model.Email);
+                    if (user is null)
+                    {
+                        Response.Status = ResponseStatusEnum.Error;
+                        Response.Message = "Usuário não encontrado.";
+                        return Response;
+                    }
+    
+                    if (!_passwordHasher.Verify(model.Password, user.PasswordHash))
+                    {
+                        Response.Status = ResponseStatusEnum.Error;
+                        Response.Message = "Senha incorreta.";
+                        return Response;
+                    }
+                    Response.Message = "Login efetuado com sucesso.";
+                    Response.Content = "TokenDeAutenticacao"; 
+                    Response.Status = ResponseStatusEnum.Success;
             }
+            catch (Exception ex)
+            {
 
-            var passwordHash = _passwordHasher.Hash(model.Password);
-
+            }
+            return Response;
         }
     }
 }

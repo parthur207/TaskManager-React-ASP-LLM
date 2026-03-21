@@ -9,7 +9,7 @@ namespace TaskManager.Core.Ports.Task
 {
     public interface IDeleteTaskPort
     {
-        Task<SimpleResponseModel> Execute(Guid IdTask, Guid IdUser);
+        Task<SimpleResponseModel> ExecuteAsync(Guid IdTask, Guid IdUser);
 
     }
 }

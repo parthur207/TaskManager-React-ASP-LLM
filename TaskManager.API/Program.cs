@@ -71,11 +71,11 @@ namespace TaskManager.API
             builder.Services.AddScoped<UserUseCaseFacade>();
 
             //Ports
-            builder.Services.AddScoped<ICreateTaskPort, CreateTaskPort>();
-            builder.Services.AddScoped<IDeleteTaskPort, DeleteTaskPort>();
-            builder.Services.AddScoped<IGetTaskByIdPort, GetTaskByIdPort>();
-            builder.Services.AddScoped<ISearchTaskPort, SearchTaskPort>();
-            builder.Services.AddScoped<IUpdateTaskDetailsPort, UpdateTaskDetailsPort>();
+            builder.Services.AddScoped<ICreateTaskPort, CreateTaskAdapter>();
+            builder.Services.AddScoped<IDeleteTaskPort, DeleteTaskAdapter>();
+            builder.Services.AddScoped<IGetTaskByIdPort, GetTaskByIdAdapter>();
+            builder.Services.AddScoped<ISearchTaskPort, SearchTaskAdapter>();
+            builder.Services.AddScoped<IUpdateTaskDetailsPort, UpdateTaskDetailsAdapter>();
 
 
 

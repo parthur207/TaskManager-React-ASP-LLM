@@ -10,7 +10,6 @@ namespace TaskManager.Core.Ports.Task
 {
     public interface IGetTaskByIdPort
     {
-
-        Task<ResponseModel<TaskEntity>> Execute(Guid TaskId, Guid UserId);
+        Task<ResponseModel<TaskEntity>> ExecuteAsync(Guid TaskId, Guid UserId);
     }
 }

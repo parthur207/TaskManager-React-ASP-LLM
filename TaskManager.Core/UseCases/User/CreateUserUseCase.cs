@@ -30,9 +30,7 @@ namespace TaskManager.Core.UseCases.User
                 return Response;
             }
 
-            var userMapped= UserMapper.ModelToEntity(model);
-
-
+            var resultRepository= await _createUserPort.ExecuteAsync(model);
         }
     }
 }

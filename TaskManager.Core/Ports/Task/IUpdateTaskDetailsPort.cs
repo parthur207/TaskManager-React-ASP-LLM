@@ -10,7 +10,6 @@ namespace TaskManager.Core.Ports.Task
 {
     public interface IUpdateTaskDetailsPort
     {
-
-        Task<SimpleResponseModel> Execute(TaskEntity entity);
+        Task<SimpleResponseModel> ExecuteAsync(TaskEntity entity);
     }
 }

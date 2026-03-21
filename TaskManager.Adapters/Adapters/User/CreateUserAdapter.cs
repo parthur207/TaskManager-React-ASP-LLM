@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.Entities;
-using TaskManager.Core.Models;
-using TaskManager.Core.Ports.Task;
+using TaskManager.Core.Ports.User;
 using TaskManager.Core.ResposePattern;
 
-namespace TaskManager.Adapters.Persistence.Task
+namespace TaskManager.Adapters.Persistence.User
 {
-    public class SearchTaskPort : ISearchTaskPort
+    internal class CreateUserAdapter : ICreateUserPort
     {
-        public Task<ResponseModel<List<TaskEntity>>> ExecuteAsync(SearchTaskModel model, Guid UserId)
+        public async Task<SimpleResponseModel> ExecuteAsync(UserEntity Entity)
         {
             throw new NotImplementedException();
         }

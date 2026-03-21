@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.Entities;
-using TaskManager.Core.Ports.User;
+using TaskManager.Core.Ports.Task;
 using TaskManager.Core.ResposePattern;
 
-namespace TaskManager.Adapters.Persistence.User
+namespace TaskManager.Adapters.Persistence.Task
 {
-    internal class CreateUserPort : ICreateUserPort
+    public class UpdateTaskDetailsAdapter : IUpdateTaskDetailsPort
     {
-        public async Task<SimpleResponseModel> ExecuteAsync(UserEntity Entity)
+        public Task<SimpleResponseModel> ExecuteAsync(TaskEntity entity)
         {
             throw new NotImplementedException();
         }

@@ -10,7 +10,6 @@ namespace TaskManager.Core.Ports.Task
 {
     public interface ICreateTaskPort
     {
-
-        Task<SimpleResponseModel> Execute(TaskEntity Entity);
+        Task<SimpleResponseModel> ExecuteAsync(TaskEntity Entity);
     }
 }

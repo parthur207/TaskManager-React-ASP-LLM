@@ -8,7 +8,7 @@ using TaskManager.Core.Ports.TaskCategory;
 
 namespace TaskManager.Adapters.Persistence.TaskCategory
 {
-    internal class CreateTaskCategoryPort : ICreateTaskCategoryPort
+    internal class CreateTaskCategoryAdapter : ICreateTaskCategoryPort
     {
     }
 }

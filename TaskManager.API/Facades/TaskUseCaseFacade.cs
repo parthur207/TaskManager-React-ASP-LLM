@@ -5,7 +5,6 @@ namespace TaskManager.API.Facades
 {
     public class TaskUseCaseFacade
     {
-
         public TaskUseCaseFacade(ICreateTaskUseCase create, IUpdateTaskDetailsUseCase update, IDeleteTaskUseCase delete, IGetTaskByIdUseCase getById, ISearchTaskUseCase search)
         {
             Create = create;

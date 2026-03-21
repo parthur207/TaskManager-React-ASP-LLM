@@ -7,7 +7,7 @@ using TaskManager.Core.Ports.TaskCategory;
 
 namespace TaskManager.Adapters.Persistence.TaskCategory
 {
-    internal class UpdateTaskCategoryPort : IUpdateTaskCategoryPort
+    internal class DeleteTaskCategoryAdapter : IDeleteTaskCategoryPort
     {
     }
 }

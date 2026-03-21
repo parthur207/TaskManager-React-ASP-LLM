@@ -22,7 +22,7 @@ namespace TaskManager.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromForm] LoginRequestModel model)
         {
-            var Response = await _userUseCaseFacade.Login.Exe(model);
+            var Response = await _userUseCaseFacade.Login(model);
             if()
 
             return Ok("Login Efetuado com sucesso.");

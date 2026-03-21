@@ -11,7 +11,6 @@ namespace TaskManager.Core.Ports.Task
 {
     public interface ISearchTaskPort
     {
-
-        Task<ResponseModel<List<TaskEntity>>> Execute(SearchTaskModel model, Guid UserId);
+        Task<ResponseModel<List<TaskEntity>>> ExecuteAsync(SearchTaskModel model, Guid UserId);
     }
 }

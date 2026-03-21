@@ -7,7 +7,7 @@ using TaskManager.Core.Ports.User;
 
 namespace TaskManager.Adapters.Persistence.User
 {
-    internal class LoginUserPort : ILoginUserPort
+    internal class DeleteUserAdapter : IDeleteUserPort
     {
     }
 }
