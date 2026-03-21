@@ -34,7 +34,7 @@ namespace TaskManager.Core.Entities
         public PasswordVO PasswordHash { get; private set; }
         public RoleUserEnum Role { get; private set; }
         public UserStatusEnum Status { get; private set; }
-        public IEnumerable<TaskEntity>? TasksBelonging { get; private set; }
+        public IEnumerable<TaskEntity>? Tasks { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedDate { get; private set; }
        

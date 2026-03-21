@@ -7,26 +7,18 @@ using TaskManager.Core.Enums;
 
 namespace TaskManager.Core.Entities
 {
-    public class TaskEntity
+    public sealed class TaskEntity
     {
-
-        public TaskEntity(string name, string? description, Guid categoryId, Guid userId)
+        public TaskEntity(string name, string? description, Guid categoryId, Guid userId, DateOnly term)
         {
-            Id= Guid.NewGuid();
+            Id = Guid.NewGuid();
             Name = name;
             Description = description;
-            this.CategoryId = categoryId;
+            CategoryId = categoryId;
             UserId = userId;
-            StatusEnum =TaskStatusEnum.NotStarted;
-            CreatedAt=DateTime.Now;
-        }
-
-        public TaskEntity(string? name, string? description, TaskStatusEnum newStatus)
-        {
-            Name= name;
-            Description= description;
-            StatusEnum= newStatus;
-            UpdatedAt= DateTime.Now;
+            StatusEnum = TaskStatusEnum.NotStarted;
+            Term = term;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public Guid Id { get; private set; }
@@ -35,10 +27,37 @@ namespace TaskManager.Core.Entities
         public Guid UserId { get; set; }
         public UserEntity User { get; private set; }
         public Guid CategoryId { get; private set; }
-        public TaskCategoryEntity Category { get; private set; }
+        public TaskCategoryEntity? Category { get; private set; }
         public TaskStatusEnum StatusEnum { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; } 
+        public DateTime UpdatedAt { get; private set; }
+        public DateOnly Term { get; private set; }
 
+        public void UpdateNameOrDescription(string newName = null, string newDescription = null)
+        {
+            if (string.IsNullOrEmpty(newName) &&
+                string.IsNullOrEmpty(Description))
+            {
+                throw new ArgumentNullException("Erro. Nome e descrição nulos.");
+            }
+            Name = newName;
+            Description = newDescription;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void UpdateStatusTask(TaskStatusEnum newStatus)
+        {
+            if (StatusEnum.Equals(newStatus))
+            {
+                throw new ArgumentException($"O status '{newStatus.ToString()}' já se encontra definido.");
+            }
+
+            if (StatusEnum != TaskStatusEnum.NotStarted
+               && newStatus is TaskStatusEnum.NotStarted)
+            {
+                throw new ArgumentException($"Não é possível atribuir o status de '{newStatus.ToString()}', pois a tarefa se encontra com.");
+            }
+            StatusEnum = newStatus;
+        }
     }
 }

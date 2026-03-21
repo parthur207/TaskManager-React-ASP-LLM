@@ -27,7 +27,7 @@ namespace TaskManager.Adapters.Mappers
                 (
                     entity.Name,
                     entity.Email.Value,
-                    entity.TasksBelonging,
+                    entity.Tasks,
                     entity.Role,
                     entity.Status
                 );
