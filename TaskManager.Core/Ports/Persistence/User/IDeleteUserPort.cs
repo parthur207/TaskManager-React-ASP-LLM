@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.ResposePattern;
 
-namespace TaskManager.Core.Ports.TaskCategory
+namespace TaskManager.Core.Ports.Persistence.User
 {
-    public interface IDeleteTaskCategoryPort
+    public interface IDeleteUserPort
     {
-        Task<SimpleResponseModel> ExecuteAsync(Guid taskId, Guid userId);
+        Task<SimpleResponseModel> ExecuteAsync();
     }
 }

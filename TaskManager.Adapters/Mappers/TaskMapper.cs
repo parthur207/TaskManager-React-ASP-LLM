@@ -9,9 +9,9 @@ using TaskManager.Core.Models;
 
 namespace TaskManager.Adapters.Mappers
 {
-    public class TaskMapper
+    public   class TaskMapper
     {
-        public TaskEntity ModelToEntity(
+        public static TaskEntity ModelToEntity(
             CreateTaskModel model,
             Guid userId)
         {
@@ -25,14 +25,21 @@ namespace TaskManager.Adapters.Mappers
             );
         }
 
-        public TaskDTO EntityToDTO(TaskEntity entity)
+        public static TaskDTO EntityToDTO(TaskEntity entity)
         {
-            return new TaskDTO(
-                entity.Name,
-                Description: entity.Description,
-                CategoryId: entity.CategoryId,
-                StatusEnum: entity.StatusEnum
-            );
+            return new TaskDTO
+            {
+                Name = entity.Name,
+                Description = entity.Description ?? "",
+                TaskCategoryName = entity.Category?.Name ?? "",
+                SpaceName = entity.Space?.Name ?? "",
+                Status = entity.StatusEnum.ToString(),
+                CreatedAt = entity.CreatedAt,
+                UpdatedAt = entity.UpdatedAt,
+                Term = entity.Term,
+                OwnerUserName = entity.OwnerUser.Name ?? entity.OwnerUser.Email.Value,
+                ResponsibleUserName = entity.ResponsibleUser?.Name ?? ""
+            };
         }
     }
 }

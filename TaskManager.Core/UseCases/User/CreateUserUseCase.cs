@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.Enums;
 using TaskManager.Core.Models;
-using TaskManager.Core.Ports.User;
+using TaskManager.Core.Ports.Persistence.User;
 using TaskManager.Core.ResposePattern;
 using TaskManager.Core.UseCases.User.Interfaces;
 

@@ -12,10 +12,12 @@ namespace TaskManager.Adapters.DTOs
         public string Name { get; set; }
         public string? Description { get; set; }
         public string? TaskCategoryName { get; set; }
-        public TaskStatusEnum Status { get; set; }
+        public string SpaceName { get; set; }
+        public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateOnly Term { get; set; }
-        public UserDTO? User { get; set; }
+        public string OwnerUserName { get; set; }
+        public string ResponsibleUserName { get; set; }
     }
 }

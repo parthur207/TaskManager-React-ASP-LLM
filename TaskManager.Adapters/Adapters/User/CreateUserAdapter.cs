@@ -9,7 +9,7 @@ using TaskManager.Adapters.Mappers;
 using TaskManager.Core.Entities;
 using TaskManager.Core.Enums;
 using TaskManager.Core.Models;
-using TaskManager.Core.Ports.User;
+using TaskManager.Core.Ports.Persistence.User;
 using TaskManager.Core.ResposePattern;
 
 namespace TaskManager.Adapters.Persistence.User
@@ -27,9 +27,9 @@ namespace TaskManager.Adapters.Persistence.User
             var Response = new SimpleResponseModel();
             try
             {
-                var EntityMapper = UserMapper.ModelToEntity(model);
+                var entityMapper = UserMapper.ModelToEntity(model);
 
-                if (EntityMapper is null)
+                if (entityMapper is null)
                 {
                     Response.Status = ResponseStatusEnum.Error;
                     Response.Message = "Erro. Falha no mapeamento da entidade.";
@@ -37,14 +37,14 @@ namespace TaskManager.Adapters.Persistence.User
                 }
 
                 if (await _context.User.AnyAsync(
-                    x => x.Email.Value == EntityMapper.Email.Value))
+                    x => x.Email.Value == entityMapper.Email.Value))
                 {
                     Response.Status = ResponseStatusEnum.Error;
                     Response.Message = "Erro. Já existe um usuário com este email.";
                     return Response;
                 }
 
-                await _context.User.AddAsync(EntityMapper);
+                await _context.User.AddAsync(entityMapper);
                 await _context.SaveChangesAsync();
 
                 Response.Status=ResponseStatusEnum.Success;

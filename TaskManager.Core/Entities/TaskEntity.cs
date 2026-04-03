@@ -10,8 +10,7 @@ namespace TaskManager.Core.Entities
     public sealed class TaskEntity
     {
         public TaskEntity(string name, string? description, 
-            Guid categoryId, Guid spaceId, Guid ownerId, 
-            Guid responsibleUserId, DateOnly term)
+            Guid? categoryId, Guid spaceId, Guid ownerId, Guid responsibleUserId, DateOnly term)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -30,9 +29,9 @@ namespace TaskManager.Core.Entities
         public string? Description { get; private set; }
         public Guid OwnerId { get; set; }
         public UserEntity OwnerUser { get; private set; }
-        public Guid ResponsibleUserId { get; private set; }
-
-        public Guid CategoryId { get; private set; }
+        public Guid? ResponsibleUserId { get; private set; }
+        public UserEntity? ResponsibleUser { get; set; }
+        public Guid? CategoryId { get; private set; }
         public TaskCategoryEntity? Category { get; private set; }
         public Guid SpaceId { get; private set; }
         public SpaceEntity Space { get;private set; }

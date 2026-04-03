@@ -16,7 +16,7 @@ namespace TaskManager.Core.Entities
             Id = Guid.NewGuid();
             Name = name;
             Email = new EmailVO(email);
-            PasswordHash = new PasswordVO(passwordHash);
+            PasswordHash = new PasswordVO(passwordHash, false);
             Role=RoleUserEnum.UserCommom;
             Status=UserStatusEnum.Active;
             Tasks = [];
@@ -24,10 +24,10 @@ namespace TaskManager.Core.Entities
             CreatedAt = DateTime.Now;
         } //Create
 
-        public UserEntity(string email, string passwordHash)
+        public UserEntity(string email, string password)
         {
             Email = new EmailVO(email);
-            PasswordHash = new PasswordVO(passwordHash);
+            PasswordHash = new PasswordVO(password, true);
         }//Login
 
         public Guid Id { get; private set; }
@@ -37,7 +37,7 @@ namespace TaskManager.Core.Entities
         public RoleUserEnum Role { get; private set; }
         public UserStatusEnum Status { get; private set; }
         public IEnumerable<TaskEntity>? Tasks { get; private set; }
-        public IList<SpaceMemberEntity> Spaces { get; private set; }
+        public IList<SpaceMemberEntity>? Spaces { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedDate { get; private set; }
        
@@ -51,7 +51,7 @@ namespace TaskManager.Core.Entities
                 throw new ArgumentException("A nova senha deve ser diferente da antiga.");
 
             UpdatedDate = DateTime.Now;
-            PasswordHash = new PasswordVO(newPasswordHash);
+            PasswordHash = new PasswordVO(newPasswordHash, false);
        }
 
         public void Inactive()

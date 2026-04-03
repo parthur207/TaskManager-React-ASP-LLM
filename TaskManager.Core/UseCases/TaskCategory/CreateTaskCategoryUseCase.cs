@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.Models;
-using TaskManager.Core.Ports.TaskCategory;
+using TaskManager.Core.Ports.Persistence.TaskCategory;
 using TaskManager.Core.Ports.User;
 using TaskManager.Core.ResposePattern;
 using TaskManager.Core.UseCases.TaskCategory.Interfaces;

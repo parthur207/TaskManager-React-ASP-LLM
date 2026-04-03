@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.Enums;
 using TaskManager.Core.Models;
+using TaskManager.Core.Ports.Persistence.User;
 using TaskManager.Core.Ports.Security;
-using TaskManager.Core.Ports.User;
 using TaskManager.Core.ResposePattern;
 using TaskManager.Core.UseCases.User.Interfaces;
 
@@ -41,7 +41,7 @@ namespace TaskManager.Core.UseCases.User
             }
     
             Response.Message = "Login efetuado com sucesso.";
-            Response.Content = "TokenDeAutenticacao"; 
+            Response.Content = responseRepository.Content; 
             Response.Status = ResponseStatusEnum.Success;
             
             return Response;

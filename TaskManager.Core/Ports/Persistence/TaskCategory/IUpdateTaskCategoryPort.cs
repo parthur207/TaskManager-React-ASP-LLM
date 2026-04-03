@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.ResposePattern;
 
-namespace TaskManager.Core.Ports.User
+namespace TaskManager.Core.Ports.Persistence.TaskCategory
 {
-    public interface IUpdateUserPasswordPort
+    public interface IUpdateTaskCategoryPort
     {
         Task<SimpleResponseModel> ExecuteAsync();
     }

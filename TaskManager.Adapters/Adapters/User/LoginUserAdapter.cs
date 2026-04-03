@@ -1,15 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.Adapters.Auth;
 using TaskManager.Adapters.Mappers;
 using TaskManager.Core.Enums;
 using TaskManager.Core.Models;
+using TaskManager.Core.Ports.Persistence.User;
 using TaskManager.Core.Ports.Security;
-using TaskManager.Core.Ports.User;
 using TaskManager.Core.ResposePattern;
 
 namespace TaskManager.Adapters.Persistence.User
@@ -17,9 +11,9 @@ namespace TaskManager.Adapters.Persistence.User
     public class LoginUserAdapter : ILoginUserPort
     {
         private readonly DbContextTaskManager _context;
-        private readonly IJwtGenerator _jwtGenerator;
+        private readonly IJwtGeneratorPort _jwtGenerator;
         private readonly IPasswordHasher _passwordHasher;
-        public LoginUserAdapter(DbContextTaskManager context, IJwtGenerator jwtGenerator, IPasswordHasher passwordHasher)
+        public LoginUserAdapter(DbContextTaskManager context, IJwtGeneratorPort jwtGenerator, IPasswordHasher passwordHasher)
         {
             _context = context;
             _jwtGenerator = jwtGenerator;
@@ -31,8 +25,6 @@ namespace TaskManager.Adapters.Persistence.User
             var Response= new ResponseModel<string>();
             try
             {
-                model.Password = _passwordHasher.Hash(model.Password);
-
                 var mapped = UserMapper.LoginModelToEntity(model);
 
                 if (mapped is null || await _context.User
@@ -44,8 +36,9 @@ namespace TaskManager.Adapters.Persistence.User
                 }
 
                 var dataUser = await _context.User
+                    .Where(x=>x.Status.Equals(UserStatusEnum.Active))
                      .FirstOrDefaultAsync(x => x.Email.Value.Equals(mapped.Email.Value)
-                     && x.PasswordHash.Value.Equals(mapped.PasswordHash.Value));
+                     && _passwordHasher.Verify(model.Password, x.PasswordHash.Value));
 
                 if(dataUser == null || dataUser?.Status!=UserStatusEnum.Active)
                 {
@@ -55,7 +48,7 @@ namespace TaskManager.Adapters.Persistence.User
                 }
 
                 Response.Status = ResponseStatusEnum.Success;
-                Response.Content = _jwtGenerator.GenerateToken(dataUser.Id, dataUser.Role.ToString());
+                Response.Content = _jwtGenerator.GenerateToken(dataUser.Id, dataUser.Email.Value, dataUser.Role);
                 Response.Message = "Login efetuado com sucesso.";
             }
             catch (Exception ex)

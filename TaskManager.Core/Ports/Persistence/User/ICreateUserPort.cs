@@ -7,7 +7,7 @@ using TaskManager.Core.Entities;
 using TaskManager.Core.Models;
 using TaskManager.Core.ResposePattern;
 
-namespace TaskManager.Core.Ports.User
+namespace TaskManager.Core.Ports.Persistence.User
 {
     public interface ICreateUserPort
     {

@@ -4,20 +4,31 @@
     {
         public string Value { get; }
 
-        public PasswordVO(string password)
+
+
+        public PasswordVO(string password, bool isLogin)
         {
-            if (string.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("A senha não pode ser vazia.");
+            if (isLogin)
+            {
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    throw new ArgumentException("A senha não pode ser vazia.");
+                }
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(password))
+                    throw new ArgumentException("A senha não pode ser vazia.");
 
-            if (password.Length < 6)
-                throw new ArgumentException("A senha deve conter no mínimo 6 caracteres.");
+                if (password.Length < 6)
+                    throw new ArgumentException("A senha deve conter no mínimo 6 caracteres.");
 
-            if (!password.Any(char.IsUpper))
-                throw new ArgumentException("A senha deve conter ao menos uma letra maiúscula.");
+                if (!password.Any(char.IsUpper))
+                    throw new ArgumentException("A senha deve conter ao menos uma letra maiúscula.");
 
-            if (!password.Any(IsSpecialCharacter))
-                throw new ArgumentException("A senha deve conter ao menos um caractere especial.");
-
+                if (!password.Any(IsSpecialCharacter))
+                    throw new ArgumentException("A senha deve conter ao menos um caractere especial.");
+            }
             Value = password;
         }
 

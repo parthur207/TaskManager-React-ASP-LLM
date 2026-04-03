@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Core.ResposePattern;
 
-namespace TaskManager.Core.Ports.User
+namespace TaskManager.Core.Ports.Persistence.User
 {
-    public interface IDeleteUserPort
+    public interface IUpdateUserPasswordPort
     {
         Task<SimpleResponseModel> ExecuteAsync();
     }

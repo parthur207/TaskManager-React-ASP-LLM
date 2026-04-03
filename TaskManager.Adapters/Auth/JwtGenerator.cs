@@ -7,10 +7,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Core.Enums;
+using TaskManager.Core.Ports.Security;
 
 namespace TaskManager.Adapters.Auth
 {
-    public class JwtGenerator : IJwtGenerator
+    public class JwtGenerator : IJwtGeneratorPort
     {
         private readonly string _secretKey;
         private readonly string _issuer;
@@ -25,15 +27,17 @@ namespace TaskManager.Adapters.Auth
             _expirationMinutes = int.Parse(configuration["Jwt:ExpirationInMinutes"]);
         }
 
-        public string GenerateToken(Guid userId, string role)
+        public string GenerateToken(Guid userId, string email, RoleUserEnum role)
         {
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                new Claim(ClaimTypes.Role, role),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString())
-            };
+    {
+        new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+        new Claim(ClaimTypes.Email, email),
+        new Claim(ClaimTypes.Role, role.ToString()),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(JwtRegisteredClaimNames.Iat,
+            DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString())
+    };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -45,6 +49,7 @@ namespace TaskManager.Adapters.Auth
                 expires: DateTime.UtcNow.AddMinutes(_expirationMinutes),
                 signingCredentials: credentials
             );
+
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }

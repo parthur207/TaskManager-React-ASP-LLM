@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManager.Adapters.Auth
+namespace TaskManager.Core.Ports.Persistence.Space
 {
-    public interface IJwtGenerator
+    internal class ICreateSpacePort
     {
-        string GenerateToken(Guid UserId, string Role);
     }
 }

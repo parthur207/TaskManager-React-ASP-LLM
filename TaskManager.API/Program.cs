@@ -1,5 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using TaskManager.Adapters.Persistence;
 using TaskManager.Adapters.Persistence.Task;
+using TaskManager.Adapters.Security;
 using TaskManager.API.Facades;
+using TaskManager.Core.Ports.Security;
 using TaskManager.Core.Ports.Task;
 
 namespace TaskManager.API
@@ -60,9 +64,10 @@ namespace TaskManager.API
 
             //Banco de dados SQL
             /*var cnn = builder.Configuration.GetConnectionString("DefaultConnection");
-            Console.WriteLine($"Conexão: {cnn}");
+            Console.WriteLine($"Conexão: {cnn}");*/
 
-            builder.Services.AddDbContext<DbContextInMemory>(options => options.UseSqlServer(cnn));*/
+            builder.Services.AddDbContext<DbContextTaskManager>(options => options
+            .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
             //Facades
@@ -77,9 +82,11 @@ namespace TaskManager.API
             builder.Services.AddScoped<ISearchTaskPort, SearchTaskAdapter>();
             builder.Services.AddScoped<IUpdateTaskDetailsPort, UpdateTaskDetailsAdapter>();
 
+            builder.Services.AddHttpContextAccessor();
 
+            builder.Services.AddScoped<ICurrentUserPort, HttpCurrentUserAdapter>();
 
-            builder.Services.AddScoped<>();
+   
 
 
             //builder.Services.AddTransient<>(); MAPPERS ou Helpers
