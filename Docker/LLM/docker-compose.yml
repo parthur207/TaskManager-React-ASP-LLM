@@ -1,9 +1,11 @@
+name: LLM_Ollama
+
 services:
   ollama:
     build:
-      context: ./LLM
+      context: .
       dockerfile: Dockerfile
-    container_name: ollama
+    container_name: LLM_Ollama
     ports:
       - "11434:11434"
     volumes:
