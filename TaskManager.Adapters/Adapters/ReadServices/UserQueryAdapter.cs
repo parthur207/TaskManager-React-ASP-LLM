@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,8 @@ namespace TaskManager.Adapters.Adapters.ReadServices
             }
             catch (Exception ex)
             {
-
+                throw new Exception("Ocorreu um erro inesperado.");
+                Debug.Assert(false, ex.Message);
             }
             return Response;
         }
@@ -83,6 +85,8 @@ namespace TaskManager.Adapters.Adapters.ReadServices
             }
             catch (Exception ex)
             {
+                throw new Exception("Ocorreu um erro inesperado.");
+                Debug.Assert(false, ex.Message);
             }
             return Response;
         }
@@ -116,6 +120,8 @@ namespace TaskManager.Adapters.Adapters.ReadServices
             }
             catch (Exception ex)
             {
+                throw new Exception("Ocorreu um erro inesperado.");
+                Debug.Assert(false, ex.Message);
             }
             return Response;
         }

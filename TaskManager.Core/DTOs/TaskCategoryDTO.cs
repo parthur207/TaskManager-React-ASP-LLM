@@ -14,6 +14,7 @@ namespace TaskManager.Adapters.DTOs
         {
             return new TaskCategoryEntity
                 (
+                    model.
                     model.Name
                 );
         }

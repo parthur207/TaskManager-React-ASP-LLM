@@ -25,8 +25,8 @@ namespace TaskManager.Adapters.Persistence.Task
             try
             {
                 var entity = await _contextTask.Task
-                    .FirstOrDefaultAsync(x => x.Id == IdUser 
-                    && x.OwnerId == IdUser);
+                    .FirstOrDefaultAsync(x => x.Id == IdTask
+                    && x.OwnerId == IdUser || x.ResponsibleUserId == IdUser);
                 
                 if(entity is null)
                 {
@@ -34,18 +34,20 @@ namespace TaskManager.Adapters.Persistence.Task
                     Response.Status= ResponseStatusEnum.Error;
                     return Response;
                 }
+                
+                _contextTask.Task.Remove(entity);
+                await _contextTask.SaveChangesAsync();
 
-               await _contextTask.Task.ExecuteDeleteAsync();
-
-
-
+                Response.Message = "Tarefa excluída com sucesso.";
+                Response.Status = ResponseStatusEnum.Success;
+                return Response;
             }
             catch (Exception ex)
             {
 
             }
 
-            throw new NotImplementedException();
+            throw new Exception();
         }
     }
 }

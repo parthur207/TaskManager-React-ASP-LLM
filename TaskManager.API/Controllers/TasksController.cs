@@ -19,6 +19,7 @@ namespace TaskManager.API.Controllers
             _taskUseCaseFacade = taskUseCaseFacade;
         }
 
+        [HttpPost("create")]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskModel model)
         {
             var Response = await _taskUseCaseFacade.Create.ExecuteAsync(model);
@@ -45,6 +46,7 @@ namespace TaskManager.API.Controllers
             }
         }
 
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateTask([FromBody] UpdateTaskModel model)
         {
             var Response = await _taskUseCaseFacade.Update.ExecuteAsync(model);
@@ -64,5 +66,6 @@ namespace TaskManager.API.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError, "Erro inesperado.");
             }
         }
+    }
 }
 

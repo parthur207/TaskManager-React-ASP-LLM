@@ -14,14 +14,19 @@ namespace TaskManager.Core.Entities
             Tasks = [];
             Name = name;
             OwnerId = ownerId;
-            Members = members;
+            Members = members?.ToList() ?? new List<SpaceMemberEntity>();
+            Members.Add(new SpaceMemberEntity(Id, ownerId));
+            CreatedAt= DateTime.Now;
         }
+
         public Guid Id { get; private set; }
         public IList<TaskEntity>? Tasks { get; set; }
         public string Name { get;set; }
         public Guid OwnerId { get; set; } 
         public UserEntity Owner { get; set; }
         public IList<SpaceMemberEntity>? Members { get; set; }
+        public DateTime CreatedAt { get; private set; } 
+        public DateTime UpdatedAt { get; private set; }
 
         public void AddMember(UserEntity user)
         {
@@ -29,6 +34,7 @@ namespace TaskManager.Core.Entities
                 throw new InvalidOperationException("Usuário já pertence ao espaço.");
 
             Members.Add(new SpaceMemberEntity(Id, user.Id));
+            UpdatedAt= DateTime.UtcNow;
         }
 
         public void RemoveMember(Guid userId)
@@ -39,6 +45,7 @@ namespace TaskManager.Core.Entities
                 throw new InvalidOperationException("Usuário não pertence ao espaço.");
 
             Members?.Remove(member);
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public void ChangeName(string newName)
@@ -50,6 +57,7 @@ namespace TaskManager.Core.Entities
                throw new ArgumentNullException(nameof(newName), "O novo nome para o espaço não pode ter mais que 60 caracteres.");
 
             Name = newName;
+            UpdatedAt = DateTime.UtcNow;
         }
     }
 }

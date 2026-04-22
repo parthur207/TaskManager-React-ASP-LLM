@@ -32,15 +32,19 @@ namespace TaskManager.Adapters.Persistence.TaskCategory
                     return Response;
                 }
 
-                if (!await _context.TaskCategory.AnyAsync(x=>x.UserId==userId 
-                && x.Id== taskCategoryId))
+                var taskCategory = await _context.TaskCategory.FirstOrDefaultAsync(x => x.Id == taskCategoryId
+                && x.UserId == userId);
+
+                if (taskCategory is null)
                 {
-                    Response.Status= ResponseStatusEnum.NotFound;
+                    Response.Status = ResponseStatusEnum.Unauthorized;
                     Response.Message = "Operação inválida.";
                     return Response;
                 }
 
-                await _context.TaskCategory.ExecuteDeleteAsync(taskCategoryId);
+                 _context.TaskCategory.Remove(taskCategory);
+                await _context.SaveChangesAsync();
+
                 return Response;
             }
             catch (Exception ex)

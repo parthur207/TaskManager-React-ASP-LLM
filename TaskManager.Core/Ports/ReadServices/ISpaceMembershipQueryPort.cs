@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Adapters.DTOs;
+using TaskManager.Core.ResposePattern;
 
 namespace TaskManager.Core.Ports.ReadServices
 {
     public interface ISpaceMembershipQueryPort
     {
-        Task<bool> IsUserMemberAsync(Guid userId, Guid spaceId);
-
-        Task<IEnumerable<Guid>> GetUserSpacesAsync(Guid userId);
-        Task<IEnumerable<SpaceDTO>> GetUserSpacesDetailsAsync(Guid userId);
+        Task<ResponseModel<bool>> IsUserMemberAsync(Guid userId, Guid spaceId);
+        Task<ResponseModel<IEnumerable<Guid>>> GetUserSpacesAsync(Guid userId);
+        Task<ResponseModel<IEnumerable<SpaceDTO>>> GetUserSpacesDetailsAsync(Guid userId);
+        Task<ResponseModel<IEnumerable<string>>> GetUsersEmailsInSpaceAsync(Guid spaceId, Guid userId);
     }
 }

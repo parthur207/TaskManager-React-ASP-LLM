@@ -14,7 +14,7 @@ namespace TaskManager.Core.Entities
             UserId = userId;
             Name = name;
             CreatedAt = DateTime.Now;
-            Tasks = [];
+            Tasks = new List<TaskEntity>();
         }//Criar
 
         public Guid Id { get; private set; }

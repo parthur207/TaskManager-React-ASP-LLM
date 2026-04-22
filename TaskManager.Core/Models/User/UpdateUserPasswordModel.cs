@@ -8,6 +8,7 @@ namespace TaskManager.Core.Models.User
 {
     public class UpdateUserPasswordModel
     {
-        public 
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
     }
 }

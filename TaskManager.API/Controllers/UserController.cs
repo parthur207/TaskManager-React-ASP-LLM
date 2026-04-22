@@ -11,7 +11,6 @@ namespace TaskManager.API.Controllers
 {
     [ApiController]
     [Route("api/user")]
-    [AllowAnonymous]
     public class UserController : Controller
     {
         private readonly UserUseCaseFacade _userUseCaseFacade;
@@ -20,6 +19,7 @@ namespace TaskManager.API.Controllers
             _userUseCaseFacade = userUseCaseFacade;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromForm] LoginRequestModel model)
         {
@@ -44,10 +44,37 @@ namespace TaskManager.API.Controllers
             }
         }
 
+        [AllowAnonymous]
+
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromForm] CreateUserModel model)
         {
             var Response= await _userUseCaseFacade.Create.ExecuteAsync(model);
+
+            switch (Response.Status)
+            {
+                case ResponseStatusEnum.Error:
+                    return BadRequest(Response);
+
+                case ResponseStatusEnum.NotFound:
+                    return NotFound(Response);
+
+                case ResponseStatusEnum.Success:
+                    return Ok(Response);
+
+                case ResponseStatusEnum.CriticalError:
+                    return BadRequest(Response);
+
+                default:
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Erro inesperado.");
+            }
+        }
+
+        [Authorize]
+        [HttpPost("update-password")]
+        public async Task<ActionResult> UpdatePassword([FromForm] UpdateUserPasswordModel model)
+        {
+            var Response = await _userUseCaseFacade.UpdatePassword.ExecuteAsync(model);
 
             switch (Response.Status)
             {

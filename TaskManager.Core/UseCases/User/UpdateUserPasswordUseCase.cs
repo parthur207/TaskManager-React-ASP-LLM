@@ -9,7 +9,7 @@ using TaskManager.Core.UseCases.User.Interfaces;
 
 namespace TaskManager.Core.UseCases.User
 {
-    internal class UpdateUserPasswordUseCase : IUpdateUserPasswordUseCase
+    public class UpdateUserPasswordUseCase : IUpdateUserPasswordUseCase
     {
         private readonly IUpdateUserPasswordPort _updateUserPasswordPort;
         public UpdateUserPasswordUseCase(IUpdateUserPasswordPort updateUserPasswordPort)
@@ -17,8 +17,9 @@ namespace TaskManager.Core.UseCases.User
             _updateUserPasswordPort = updateUserPasswordPort;
         }
 
-        public async Task<SimpleResponseModel> ExecuteAsync()
+        public async Task<SimpleResponseModel> ExecuteAsync(UpdateUserPasswordUseCase model)
         {
+
             throw new NotImplementedException();
         }
     }

@@ -42,12 +42,14 @@ namespace TaskManager.Core.UseCases.Task
             }
             
             if (!string.IsNullOrWhiteSpace(model.ResponsibleEmail)
-                && _userQuery.UserExists(model.ResponsibleEmail).Result.Content)
+                && _membership..Result.Content)
             {
                 Response.Message="Erro. O usuário responsável não existe.";
                 Response.Status= ResponseStatusEnum.Error;
                 return Response;
             }
+
+            var entityMembership = await _membership.(_currentUserPort.UserId, model.SpaceId);
 
             var responseRepository = await _createTaskPort.ExecuteAsync(model);
 

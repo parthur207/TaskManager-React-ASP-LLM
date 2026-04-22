@@ -26,4 +26,4 @@ namespace TaskManager.Core.Entities
         }
     }
 }
-}
+

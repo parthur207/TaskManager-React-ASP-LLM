@@ -24,28 +24,29 @@ namespace TaskManager.Adapters.Persistence.Task
             _currentUserPort = currentUserPort;
         }
 
-        public async Task<SimpleResponseModel> ExecuteAsync(CreateTaskModel model)
+        public async Task<SimpleResponseModel> ExecuteAsync(TaskEntity entity)
         {
             var Response = new SimpleResponseModel();
             try
             {
-                
-                var mapped= TaskMapper.ModelToEntity(model, _currentUserPort.UserId);
-
-                if (mapped is null)
+                if (entity is null)
                 {
                     Response.Status= ResponseStatusEnum.Error;
-                    Response.Message="Ocorreu um erro ao mapear os dados da tarefa.";
+                    Response.Message="Ocorreu um erro. Entidade inválida/nula";
                     return Response;
                 }
 
-                
+                await _context.Task.AddAsync(entity);
+                await _context.SaveChangesAsync();
+
+                Response.Status = ResponseStatusEnum.Success;
+                Response.Message = "Tarefa criada com sucesso.";
+                return Response;
             }
             catch (Exception ex)
             {
                 throw new Exception($"Ocorreu um erro inesperado: {ex.Message}");
             }
-            return Response;
         }
     }
 }
