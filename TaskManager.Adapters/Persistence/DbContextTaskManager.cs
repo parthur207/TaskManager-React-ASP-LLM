@@ -12,7 +12,8 @@ namespace TaskManager.Adapters.Persistence
         public DbSet<TaskCategoryEntity> TaskCategory { get; set; }
         public DbSet<SpaceEntity> Space { get; set; }
         public DbSet<SpaceMemberEntity> SpaceMember { get; set; }
-       
+        public DbSet<TaskChildrenEntity> TaskChildren { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region UserEntity

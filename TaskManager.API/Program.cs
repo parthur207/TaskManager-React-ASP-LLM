@@ -5,12 +5,16 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using TaskManager.Adapters.DI;
 using TaskManager.API.Facades.DI;
+using TaskManager.API.Hubs;
 using TaskManager.Core.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// SignalR
+builder.Services.AddSignalR();
 
 builder.Services.AddOpenApiDocument(options =>
 {
@@ -48,9 +52,37 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
+
+    // Permite que o SignalR receba o token via query string
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(
+                builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+                ?? ["http://localhost:5173"])      // Vite dev server padrão
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Necessário para SignalR
+    });
+});
 
 builder.Services.AddCore();
 builder.Services.AddAdapters(builder.Configuration);
@@ -69,7 +101,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Endpoint do Hub SignalR
+app.MapHub<TaskHub>("/hubs/tasks");
+
 app.Run();
+
