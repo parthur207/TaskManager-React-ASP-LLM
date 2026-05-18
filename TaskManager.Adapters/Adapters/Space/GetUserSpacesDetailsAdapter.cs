@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,11 +15,25 @@ namespace TaskManager.Adapters.Adapters.Space
     public class GetUserSpacesDetailsAdapter : IGetUserSpacesDetailsPort
     {
         private readonly DbContextTaskManager _context;
+        public GetUserSpacesDetailsAdapter(DbContextTaskManager context)
+        {
+            _context = context;
+        }
+
         public async Task<ResponseModel<SpaceDTO>> ExecuteAsync(Guid userId)
         {
             var Response = new ResponseModel<SpaceDTO>();
+          
             try
             {
+                if (!await _context.SpaceMember.AnyAsync(x => x.UserId == userId))
+                {
+                    Response.Message = "Nenhum espaço foi encontrado.";
+                    Response.Status = Core.Enums.ResponseStatusEnum.NotFound;
+                    return Response;
+                }
+
+                var spaces
 
             }
             catch (Exception ex)
